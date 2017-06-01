@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>只能输入数字且必须只能且只有2位小数</title>
+</head>
+<body>
+<!-- 只能输入数字且必须只能且只有2位小数 -->
+
+
+<input type="text" id="money" name="money" size="10"/>元<br> 
+
+
+<script type="text/javascript">
+function SetInputNum(obj){
+	this.obj = obj;
+}
+SetInputNum.prototype.inputChange = function(){
+	//  obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+  //  obj.value = obj.value.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+  // obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的
+  // obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+  // obj.value=obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数
+  // 
+	if(!isNaN(this.obj.value)) {
+	  	this.obj.value=this.obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+	}else{
+	  	this.obj.value="";
+	} 
+}
+SetInputNum.prototype.inputBlur = function() {
+	if(this.obj.value)
+		this.obj.value = parseFloat(this.obj.value).toFixed(2);
+}
+
+var money = document.getElementById("money");
+var setMoney = new SetInputNum(money);
+money.onkeyup = function(){
+	setMoney.inputChange();
+}
+money.onblur = function(){
+	setMoney.inputBlur();
+}
+</script>
+
+</body>
+</html>
