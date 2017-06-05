@@ -1,0 +1,63 @@
+SEO前端需求：（页面实现规范）
+1、使用css sprite、压缩css/js文件、合并css/js文件。尽可能少的在页面文件内引用css/js，可以使用其他方式减少请求，大量在页面引用会造成页面信噪比过低。
+2、尽可能少保留代码注释。
+3、同页面内，页面结构不能重复（如HTML中有两套几乎相同的div/nav，然后js切换显示。这样的情况谷歌建议页面结构保留其中一种，另一种使用js修改实现）。
+4、禁止JS实现加载HTML结构（含正文/链接/图片），在必须使用纯动态渲染的时候，如页面重要，需要制作一套静态HTML版本。
+5、不要使用iframe，displaynone内联等不规范用法。
+6、文字超长需要截断/适配的情况，需要在HTML保留完整文字，使用JS/CSS技术实现截断
+7、结合使用media和min-resolution及-webkit-min-device-pixel-ratio针对高分辨率、移动显示屏更改CSS中的background-image属性。而不是使用JS适配
+8、页面不超过100K
+9、将含有文本资源的内容转化为图片资源的的方式，不仅影响用户体验，对搜索引擎也不友好，除需用到极特殊字体外禁止。可使用ALT描述全文来补救，效果欠佳
+10、效率增益，例如电话可拨打、地址可定位（尤其是商业服务/工具类网站）
+11、链接不可使用js触发点击，必须使用<a>暴露给爬虫
+12、正确的状态码响应、页面需与状态对应：200状态需显示正常页面、404页面不能200显示（例如后端会将所有请求作为某个后端程序参数执行，在遇到错误时，错误使用200状态码返回的页面）
+13、Shortcut Icon/icon并存，必须命名favicon.ico放置根目录，不可放置在其他目录、不可更名
+
+SEO前端需求：（移动适配规范）
+1、禁止把移动站作为pc站下的一个目录，同时移动站访问入口需要唯一,除移动域名外不应有其他开放入口。
+2、禁止在单一域名下采用多种配置方式（例如：移动版html页面同时存在于www和m域）
+3、移动适配方式需要采用：跳转适配（相同URL两端：打开文章内容一致。server端301跳转）、代码适配（两端打开URL不变，在请求时后端响应不同的页面），自适配（代码一致，URL一致。使用CSS和JS技术实现）。跳转适配和代码适配都不可用前端技术实现。
+4、索引翻页（传统）：列举全部翻页，不能仅有上页下页（可只在前端显示上下页）。索引翻页（触发）：下拉次数上限为3次（不允许使用点击加载更多或无限加载）
+5、禁止被搜索引擎转码：<meta http-equiv="Cache-Control" content="no-transform" />
+6、在PC页面中标明移动地址（非自适配的情况）：<meta name="mobile-agent" content="format=html5;url=https://*/">(需以/结束)
+7、相同链接移动端TDK要与PC端保持一致
+8、跳转适配时页面需要特殊canonical标记：
+PC：<link rel="alternate" media="only screen and (max-width: 640px)"
+href="http://m.com/1.html">
+移动：<link rel="canonical" href="http://x.com/1.html">
+
+SEO前端需求：（内容规范）
+1、TDK：需要完善每个页面的TITLE和DESCRIPTION部分，主旨明确的标题15-24字。禁止出现标题重复（即便URL相同，参数不同也不可以使用同样的TDK）
+2、APP应提供直接下载，且下载的为最佳版本；百度严厉打击欺诈性下载手机助手和应用市场的行为（如下载应用宝链接等）
+3、时序性内容（如列表页，更新详情页）需要有准确的页面内容时间信息，不能过旧/过新/时间混乱排序
+4、列表/索引页文章排序：需根据时序排列（DESC或顺序排序，不能穿插排序） 
+5、页面主体中的文本内容和背景色应有明显的区分度
+6、转载内容剔除锚文本信息，优化导出链接。降低对导出链接的依赖
+
+SEO前端需求：（HTML标签规范）
+1、严格使用语义化标签进行页面结构描述，同时符合W3C标准。头部<header>，导航<nav>，底部<footer>，插图<figure>，边栏<aside>，段落<section>，文章<article>，主内容<main>，地址<address>。
+2、对于自适应图片，请添加 <picture> 元素。
+3、需要对所有图片进行alt属性标记，标记内容为描述图片内容（如：简理财手机截图、简理财获公安部三级认证证书图）
+4、使用title对底部/顶部链接增加描述（描述目标地址的精简介绍）
+5、每个页面需要存在<h1>一个（用于大标题/logo），不能出现多个<h1>。每个页面需要存在<h2>数个，用于最顶层的导航，以及文章标题。
+6、使用og或itemscope标记网站每个页面（以OG为例，有og:title,og:type,og:url,og:size,og:description,og:sitename,og:release_date等）
+7、使用canonical标记所有页面：<link rel=“canonical” href=“https://www.*.com/当前页面” />
+8、非主要导出链接（跨域）使用nofollow/external nofollow属性，内部链接（域内）重复多次出现的，在非主要位置使用nofollow属性
+9、头部标记author（除资源类页面外，一般使用网址作为author信息、注意移动和PC版本如使用非自适应方式需要区分）
+10、上传121*75的LOGO图片至解析根目录，图片地址写入首页HEAD OG:IMAGE中、其他页面图片与内容相关；图片上没有文字；图片比例接近121*91即可被搜索时显示
+
+SEO前端需求：（结构、链接规范）
+1、页面中内部链接（例：LOGO，导航，404页面按钮，JS）统一使用带www，不带index，带https的地址，例：https://www.jianlc.com/about/
+2、重要页面用目录形式，目录除非单一页面独立存在否则要加入索引功能
+3、页面始终要保留上级入口，层级较深的需要有面包屑导航（重要）
+4、使用.html?*=* .html#*等形式的参数控制的URL，只能展现相似内容（如参数为不同source，区分渠道，但页面内容一致）。禁止其他URL中出现参数：a.jsp?project=2&id=bank 需rewrite为a/bank/2或a/bank/2.html。推广/渠道/其他动态页面HEAD部分添加<link rel=“canonical” href=“不含参数的uri” />
+5、URL命名实例：错误（www.x.com/html/static/about/aboutus.html）正确（www.x.com/about/;www.x.com/finance/about/)
+6、URL命名规范：使用能描述出页面内容概要的英文短语组合，“_”为错误，“-”为正确
+7、www地址、ip地址、与无www地址访问应返回一致的content（301到https的www）
+
+SEO前端需求：（黑白名单）
+1、需要创建robots.txt（爬虫协议，必须在根目录且不可更名）、sitemap.xml（站点地图，必须在根目录且不可更名）在每个项目的根目录。例如：www.jianlc.com/robots.txt m.jianlc.com/robots.txt api.jianlc.com/robots.txt。
+2、主要展示、资源域名外的二级域名（如api、cache、sec、mail），整理进入爬虫黑名单。实现方法为当前目录下robots.txt写入disallow。如有页面存在，请在meta写入noindex和noarchive
+3、禁止屏蔽css/js文件、如s.jianlc.com/robots.txt，域名下存在css/js/图片等需要抓取的文件，则应写入allow：/
+4、sitemap.xml 参考 https://www.jianlc.net/sitemap.xml 建立即可。其中mobile选项是基于代码适配的（不适合自适配和跳转适配）
+5、正常页面不可在META出现(noindex/noarchive)
