@@ -1,0 +1,109 @@
+一、适用于数字排序和字幕排序
+json 的排序方法有很多种，这是其中最简单的一种方法。
+
+var sortBy = function (filed, rev, primer) {
+    rev = (rev) ? -1 : 1;
+    return function (a, b) {
+        a = a[filed];
+        b = b[filed];
+        if (typeof (primer) != 'undefined') {
+            a = primer(a);
+            b = primer(b);
+        }
+        if (a < b) { return rev * -1; }
+        if (a > b) { return rev * 1; }
+        return 1;
+    }
+};
+var obj = [
+    {b: '3', c: 'c'}, 
+    {b: '1', c: 'a'},
+    {b: '2', c: 'b'}
+];
+
+1、数字排序
+obj.sort(sortBy('b', false, parseInt));
+console.log(obj);
+
+2、字符串排序
+obj.sort(sortBy('b', false, String));
+console.log(obj);
+
+二、JSON排序例子2
+
+var willSort = [
+    {
+        name:'shangwenhe',
+        age:25,
+        height:170
+    },
+    {
+        name:'zhangsan',
+        age:31,
+        height:169
+    },
+    {
+        name:'lisi',
+        age:31,
+        height:167
+    },
+    {
+        name:'zhaowu',
+        age:22,
+        height:160
+    },
+    {
+        name:'wangliu',
+        age:23,
+        height:159
+    }
+];
+
+/*
+    @function     JsonSort 对json排序
+    @param        json     用来排序的json
+    @param        key      排序的键值
+*/
+function JsonSort(json,key){
+    //console.log(json);
+    for(var j=1,jl=json.length;j < jl;j++){
+        var temp = json[j],
+            val  = temp[key],
+            i    = j-1;
+        while(i >=0 && json[i][key]>val){
+            json[i+1] = json[i];
+            i = i-1;    
+        }
+        json[i+1] = temp;
+        
+    }
+    //console.log(json);
+    return json;
+}
+var json = JsonSort(willSort,'age');
+console.log(json);
+三、JSON排序例子3
+
+var people = [
+{
+    name: 'a75',
+    item1: false,
+    item2: false
+},
+{
+    name: 'z32',
+    item1: true,
+    item2: false
+},
+{
+    name: 'e77',
+    item1: false,
+    item2: false
+}];
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+people = sortByKey(people, 'name');
